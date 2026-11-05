@@ -1,178 +1,185 @@
 
-"use client";
-
 import Link from "next/link";
 
 const plans = [
   {
-    name: "STARTER",
+    name: "Starter",
     price: "₹1,499",
-    description: "For individuals and small businesses",
-    users: "1 user",
-    pages: "500 pages per month",
+    description: "For individuals getting started with document intelligence.",
+    users: "1 User",
+    pages: "500 Pages / Month",
     features: [
-      "PDF and DOCX upload",
+      "PDF and DOCX support",
       "AI document summaries",
-      "Document Q&A",
+      "Document question answering",
       "Basic document search",
       "Standard support",
     ],
-    background: "bg-blue-50",
-    border: "border-blue-100",
-    button: "bg-slate-900 hover:bg-slate-800",
   },
   {
-    name: "PROFESSIONAL",
+    name: "Professional",
     price: "₹4,999",
-    description: "For growing SMEs",
-    users: "5 users",
-    pages: "2,500 pages per month",
+    description: "For growing teams managing documents every day.",
+    users: "5 Users",
+    pages: "2,500 Pages / Month",
+    popular: true,
     features: [
       "Everything in Starter",
-      "Advanced RAG-based search",
-      "Multiple document collections",
-      "AI data extraction",
+      "Advanced document analysis",
+      "Data extraction",
       "Document comparison",
       "Report export",
       "Priority support",
     ],
-    background: "bg-sky-50",
-    border: "border-sky-100",
-    button: "bg-purple-600 hover:bg-purple-700",
-    popular: true,
   },
   {
-    name: "BUSINESS",
+    name: "Business",
     price: "₹11,999",
-    description: "For manufacturing and operations teams",
-    users: "15 users",
-    pages: "10,000 pages per month",
+    description: "For organizations with advanced document workflows.",
+    users: "15 Users",
+    pages: "10,000 Pages / Month",
     features: [
       "Everything in Professional",
-      "Manufacturing document workflows",
-      "Invoice and purchase-order intelligence",
+      "Manufacturing workflows",
+      "Invoice and PO intelligence",
       "Supplier document analysis",
-      "Advanced analytics",
-      "Role-based access and audit logs",
-      "Priority business support",
+      "Analytics and reporting",
+      "Role-based access",
+      "Audit support",
     ],
-    background: "bg-emerald-50",
-    border: "border-emerald-100",
-    button: "bg-slate-900 hover:bg-slate-800",
   },
 ];
 
 export default function PricingPage() {
   return (
-    <main className="min-h-screen bg-white">
-      <section className="bg-gradient-to-b from-purple-50 to-white px-5 py-16 text-center md:py-20">
-        <span className="rounded-full border border-purple-200 bg-white px-4 py-2 text-xs font-bold tracking-wider text-purple-700">
-          SIMPLE AND TRANSPARENT PRICING
-        </span>
+    <main className="min-h-screen bg-[#F5EFE6] px-5 py-16 text-[#38271D] sm:px-8">
 
-        <h1 className="mt-7 text-4xl font-bold tracking-tight text-gray-900 md:text-5xl">
-          Plans that grow with your business
-        </h1>
+      <div className="mx-auto max-w-7xl">
 
-        <p className="mx-auto mt-5 max-w-2xl text-base leading-7 text-gray-500">
-          Choose the right DOCINTEL AI subscription for your document
-          management and intelligence needs.
-        </p>
+        {/* HEADER */}
+        <div className="mx-auto max-w-3xl text-center">
+          <span className="inline-block rounded-full border border-[#CDBBA8] bg-[#EFE6DA] px-5 py-2 text-xs font-bold uppercase tracking-[0.18em] text-[#765139]">
+            SIMPLE AND TRANSPARENT
+          </span>
 
-        <p className="mt-4 text-xs text-gray-400">
-          Proposed launch prices for the Indian market. Validate costs before
-          commercial release.
-        </p>
-      </section>
+          <h1 className="mt-6 text-4xl font-extrabold sm:text-5xl">
+            Plans That Grow With You
+          </h1>
 
-      <section className="mx-auto grid max-w-7xl gap-7 px-5 pb-20 md:grid-cols-2 xl:grid-cols-3">
-        {plans.map((plan) => (
-          <div
-            key={plan.name}
-            className={`relative flex flex-col rounded-2xl border ${plan.border} ${plan.background} p-7 transition duration-300 hover:-translate-y-1 hover:shadow-xl`}
-          >
-            {plan.popular && (
-              <span className="absolute -top-3 right-6 rounded-full bg-purple-600 px-4 py-1.5 text-xs font-bold text-white shadow">
-                MOST POPULAR
-              </span>
-            )}
+          <p className="mt-5 text-base leading-7 text-[#806D5C]">
+            Choose the right DOCINTEL AI plan for your document
+            management needs. Get the tools and capabilities
+            your workflow requires.
+          </p>
+        </div>
 
-            <div>
-              <p className="text-lg font-extrabold tracking-wide text-gray-900">
-                {plan.name}
-              </p>
+        {/* PRICING CARDS */}
+        <div className="mt-14 grid items-stretch gap-7 lg:grid-cols-3">
 
-              <div className="mt-5 flex flex-wrap items-baseline gap-2">
-                <h2 className="text-4xl font-extrabold tracking-tight text-gray-900">
-                  {plan.price}
-                </h2>
-                <span className="text-sm text-gray-500">/ month</span>
-              </div>
-
-              <p className="mt-3 text-sm text-gray-600">
-                {plan.description}
-              </p>
-            </div>
-
-            <div className="my-7 h-px bg-gray-200" />
-
-            <div className="space-y-3">
-              <div className="flex items-center gap-3 text-sm font-semibold text-gray-800">
-                <span className="text-purple-600">✓</span>
-                {plan.users}
-              </div>
-              <div className="flex items-center gap-3 text-sm font-semibold text-gray-800">
-                <span className="text-purple-600">✓</span>
-                {plan.pages}
-              </div>
-            </div>
-
-            <div className="my-6 h-px bg-gray-200" />
-
-            <p className="mb-4 text-xs font-bold uppercase tracking-wider text-gray-500">
-              Plan Features
-            </p>
-
-            <ul className="flex-1 space-y-3">
-              {plan.features.map((feature) => (
-                <li
-                  key={feature}
-                  className="flex items-start gap-3 text-sm leading-6 text-gray-700"
-                >
-                  <span className="font-bold text-purple-600">✓</span>
-                  <span>{feature}</span>
-                </li>
-              ))}
-            </ul>
-
-            <Link
-              href="/signup"
-              className={`mt-8 block rounded-xl ${plan.button} px-5 py-3.5 text-center text-sm font-bold text-white transition`}
+          {plans.map((plan) => (
+            <div
+              key={plan.name}
+              className={`relative flex flex-col rounded-3xl border p-7 transition hover:-translate-y-1 hover:shadow-xl ${
+                plan.popular
+                  ? "border-[#765139] bg-[#765139] text-[#F5EFE6] shadow-lg"
+                  : "border-[#D8C5B0] bg-[#EFE6DA] text-[#38271D]"
+              }`}
             >
-              Get Started →
-            </Link>
-          </div>
-        ))}
-      </section>
+              {plan.popular && (
+                <span className="absolute -top-4 left-1/2 -translate-x-1/2 rounded-full bg-[#D8B99B] px-5 py-2 text-xs font-extrabold tracking-wide text-[#38271D]">
+                  MOST POPULAR
+                </span>
+              )}
 
-      <section className="border-t border-gray-100 bg-gray-50 px-5 py-14 text-center">
-        <h2 className="text-2xl font-bold text-gray-900">
-          Need a solution for your team?
-        </h2>
-        <p className="mt-3 text-sm text-gray-500">
-          Explore DOCINTEL AI and find the right tools for your workflow.
-        </p>
-        <Link
-          href="/tools"
-          className="mt-6 inline-block rounded-xl border border-purple-200 bg-white px-6 py-3 text-sm font-semibold text-purple-700 hover:bg-purple-50"
-        >
-          Explore AI Tools
-        </Link>
-      </section>
+              <div>
+                <h2 className="text-2xl font-extrabold">
+                  {plan.name}
+                </h2>
 
-      <footer className="border-t border-gray-100 px-5 py-6 text-center text-xs text-gray-400">
-        © 2026 DOCINTEL AI. All rights reserved.
-      </footer>
+                <p className={`mt-3 min-h-12 text-sm leading-6 ${
+                  plan.popular ? "text-[#E5D5C4]" : "text-[#806D5C]"
+                }`}>
+                  {plan.description}
+                </p>
+              </div>
+
+              <div className="mt-7">
+                <span className="text-4xl font-extrabold">
+                  {plan.price}
+                </span>
+                <span className={`ml-2 text-sm ${
+                  plan.popular ? "text-[#E5D5C4]" : "text-[#806D5C]"
+                }`}>
+                  / month
+                </span>
+              </div>
+
+              <div className={`mt-7 rounded-xl p-4 ${
+                plan.popular ? "bg-[#69472F]" : "bg-[#E6D8C7]"
+              }`}>
+                <p className="text-sm font-bold">{plan.users}</p>
+                <p className={`mt-2 text-sm ${
+                  plan.popular ? "text-[#E5D5C4]" : "text-[#806D5C]"
+                }`}>
+                  {plan.pages}
+                </p>
+              </div>
+
+              <div className="mt-7 flex-1">
+                <p className="text-sm font-extrabold uppercase tracking-wider">
+                  What's Included
+                </p>
+
+                <ul className="mt-5 space-y-4">
+                  {plan.features.map((feature) => (
+                    <li
+                      key={feature}
+                      className={`flex items-start gap-3 text-sm ${
+                        plan.popular ? "text-[#F0E3D5]" : "text-[#806D5C]"
+                      }`}
+                    >
+                      <span className="font-bold text-[#C69C75]">✓</span>
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <Link
+                href="/signup"
+                className={`mt-9 block rounded-xl px-5 py-4 text-center text-sm font-extrabold transition ${
+                  plan.popular
+                    ? "bg-[#D8B99B] text-[#38271D] hover:bg-[#E8CEB5]"
+                    : "bg-[#765139] text-[#F5EFE6] hover:bg-[#5D3E2B]"
+                }`}
+              >
+                Get Started →
+              </Link>
+            </div>
+          ))}
+
+        </div>
+
+        {/* BOTTOM CTA */}
+        <section className="mt-16 rounded-3xl bg-[#38271D] px-7 py-12 text-center text-[#F5EFE6]">
+          <h2 className="text-3xl font-extrabold">
+            Need a Custom Solution?
+          </h2>
+
+          <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-[#E5D5C4]">
+            Have specific document processing requirements?
+            Let's find a plan that fits your workflow.
+          </p>
+
+          <Link
+            href="/about"
+            className="mt-7 inline-flex rounded-xl bg-[#D8B99B] px-7 py-3.5 text-sm font-bold text-[#38271D] hover:bg-[#E8CEB5]"
+          >
+            Contact Our Team →
+          </Link>
+        </section>
+
+      </div>
     </main>
   );
 }

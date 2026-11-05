@@ -2,57 +2,266 @@
 "use client";
 
 import { useState } from "react";
-import Sidebar from "../../../components/Sidebar";
+import Link from "next/link";
+
+type Flashcard = {
+  question: string;
+  answer: string;
+};
 
 export default function FlashcardsPage() {
-  const [topic, setTopic] = useState("");
-  const [created, setCreated] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
+  const [cards, setCards] = useState<Flashcard[]>([]);
+  const [revealed, setRevealed] = useState<number[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
   const [current, setCurrent] = useState(0);
-  const [showAnswer, setShowAnswer] = useState(false);
 
-  const cards = [
-    { question: "What is Artificial Intelligence?", answer: "AI is the ability of machines to perform tasks that normally require human intelligence." },
-    { question: "What is Machine Learning?", answer: "Machine Learning is a branch of AI that allows systems to learn patterns from data." },
-    { question: "What is Deep Learning?", answer: "Deep Learning uses multi-layered neural networks to learn complex patterns." },
-  ];
+  function handleFile(event: React.ChangeEvent<HTMLInputElement>) {
+    const selected = event.target.files?.[0];
+    setError("");
+    setCards([]);
+    setRevealed([]);
+    setCurrent(0);
+
+    if (!selected) return;
+
+    const valid =
+      selected.name.toLowerCase().endsWith(".pdf") ||
+      selected.name.toLowerCase().endsWith(".docx");
+
+    if (!valid) {
+      setError("Please upload a PDF or DOCX file.");
+      return;
+    }
+
+    setFile(selected);
+  }
+
+  async function generateFlashcards() {
+    if (!file) {
+      setError("Please upload a document first.");
+      return;
+    }
+
+    setLoading(true);
+    setError("");
+    setCards([]);
+    setRevealed([]);
+
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
+
+      const apiUrl =
+        process.env.NEXT_PUBLIC_API_URL || "http://localhost:5000/api";
+
+      const response = await fetch(`${apiUrl}/flashcards`, {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error(
+          "Flashcards API is unavailable. Please check your backend endpoint.",
+        );
+      }
+
+      const data = await response.json();
+      const result = data.flashcards || data.cards || data.result;
+
+      if (!Array.isArray(result)) {
+        throw new Error("Unexpected response from the server.");
+      }
+
+      const formattedCards = result
+        .map((item: any) => ({
+          question: String(item.question || item.front || "").trim(),
+          answer: String(item.answer || item.back || "").trim(),
+        }))
+        .filter((item: Flashcard) => item.question && item.answer);
+
+      if (formattedCards.length === 0) {
+        throw new Error("No valid flashcards were returned.");
+      }
+
+      setCards(formattedCards);
+    } catch (err) {
+      setError(
+        err instanceof Error ? err.message : "Unable to generate flashcards.",
+      );
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  function toggleAnswer(index: number) {
+    setRevealed((previous) =>
+      previous.includes(index)
+        ? previous.filter((item) => item !== index)
+        : [...previous, index],
+    );
+  }
+
+  function nextCard() {
+    setCurrent((previous) => Math.min(previous + 1, cards.length - 1));
+  }
+
+  function previousCard() {
+    setCurrent((previous) => Math.max(previous - 1, 0));
+  }
 
   return (
-    <div className="flex min-h-screen bg-gray-50">
-      <div className="hidden w-64 shrink-0 md:block"><Sidebar /></div>
-      <main className="min-w-0 flex-1 p-5 md:p-10">
-        <p className="text-sm font-semibold text-purple-600">AI TOOLS / STUDY</p>
-        <h1 className="mt-2 text-3xl font-bold text-gray-900">AI Flashcards</h1>
-        <p className="mt-2 text-gray-500">Learn faster with interactive study cards.</p>
+    <main className="min-h-screen bg-[#F5EFE6] px-5 py-14 text-[#38271D] sm:px-8">
+      <div className="mx-auto max-w-4xl">
+        <Link
+          href="/tools"
+          className="font-bold text-[#765139] hover:underline"
+        >
+          ← Back to Tools
+        </Link>
 
-        <div className="mt-8 rounded-2xl border border-gray-200 bg-white p-6">
-          <label className="text-sm font-semibold text-gray-800">Enter your study topic</label>
-          <div className="mt-3 flex flex-col gap-3 sm:flex-row">
-            <input value={topic} onChange={(e) => setTopic(e.target.value)} placeholder="e.g. Computer Networks" className="min-w-0 flex-1 rounded-xl border border-gray-200 px-4 py-3 text-sm outline-none focus:border-purple-500" />
-            <button onClick={() => { if (!topic.trim()) return alert("Enter a topic first."); setCreated(true); setCurrent(0); setShowAnswer(false); }} className="rounded-xl bg-purple-600 px-5 py-3 text-sm font-semibold text-white hover:bg-purple-700">Create Flashcards</button>
+        <header className="mt-10 text-center">
+          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-[#765139] text-3xl text-[#F5EFE6]">
+            ▤
           </div>
-        </div>
 
-        {created ? (
-          <div className="mx-auto mt-8 max-w-2xl">
-            <p className="mb-4 text-center text-sm font-medium text-gray-500">{topic} · Card {current + 1} of {cards.length}</p>
-            <button onClick={() => setShowAnswer(!showAnswer)} className="flex min-h-64 w-full flex-col items-center justify-center rounded-3xl border border-purple-200 bg-white p-8 text-center shadow-sm hover:bg-purple-50">
-              <span className="text-xs font-semibold uppercase tracking-wider text-purple-600">{showAnswer ? "Answer" : "Question"} · Click to flip</span>
-              <span className="mt-6 text-2xl font-bold text-gray-900">{showAnswer ? cards[current].answer : cards[current].question}</span>
-            </button>
-            <div className="mt-5 flex justify-between gap-3">
-              <button disabled={current === 0} onClick={() => { setCurrent(current - 1); setShowAnswer(false); }} className="rounded-xl border border-gray-200 px-5 py-3 text-sm font-semibold disabled:opacity-40">← Previous</button>
-              <button disabled={current === cards.length - 1} onClick={() => { setCurrent(current + 1); setShowAnswer(false); }} className="rounded-xl bg-purple-600 px-5 py-3 text-sm font-semibold text-white disabled:opacity-40">Next →</button>
+          <h1 className="mt-6 text-4xl font-extrabold">
+            AI Flashcards
+          </h1>
+
+          <p className="mx-auto mt-4 max-w-2xl leading-7 text-[#806D5C]">
+            Turn your study documents into question-and-answer
+            flashcards and test your knowledge.
+          </p>
+        </header>
+
+        <section className="mt-12 rounded-3xl border border-[#D8C5B0] bg-[#EFE6DA] p-6 sm:p-10">
+          <label
+            htmlFor="flashcard-file"
+            className="flex cursor-pointer flex-col items-center rounded-2xl border-2 border-dashed border-[#B99B7D] bg-[#F5EFE6] px-6 py-12 text-center hover:bg-[#EDE1D2]"
+          >
+            <span className="text-4xl text-[#765139]">↑</span>
+            <span className="mt-4 text-lg font-bold">
+              Upload your study document
+            </span>
+            <span className="mt-2 text-sm text-[#806D5C]">
+              Select a PDF or DOCX file
+            </span>
+
+            <input
+              id="flashcard-file"
+              type="file"
+              accept=".pdf,.docx,application/pdf,application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+              onChange={handleFile}
+              className="hidden"
+            />
+          </label>
+
+          {file && (
+            <div className="mt-5 rounded-xl border border-[#D8C5B0] bg-[#EDE1D2] p-5">
+              <p className="break-all font-bold">{file.name}</p>
+              <p className="mt-2 text-sm text-[#806D5C]">
+                {(file.size / 1024 / 1024).toFixed(2)} MB
+              </p>
+              <button
+                type="button"
+                onClick={() => {
+                  setFile(null);
+                  setCards([]);
+                  setRevealed([]);
+                  setError("");
+                }}
+                className="mt-3 text-sm font-bold text-[#765139] hover:underline"
+              >
+                Remove file
+              </button>
             </div>
-            <p className="mt-5 text-center text-xs text-gray-400">Demo flashcards only. AI-generated cards require backend integration.</p>
-          </div>
-        ) : (
-          <div className="mt-8 rounded-2xl border border-dashed border-gray-300 bg-white p-12 text-center">
-            <div className="text-4xl">🗂️</div>
-            <h2 className="mt-4 font-bold text-gray-800">Your flashcards will appear here</h2>
-            <p className="mt-2 text-sm text-gray-500">Enter a topic to preview interactive flashcards.</p>
-          </div>
+          )}
+
+          {error && (
+            <p className="mt-5 rounded-xl border border-[#B98A72] bg-[#EAD5C6] p-4 text-sm font-semibold text-[#6B3829]">
+              {error}
+            </p>
+          )}
+
+          <button
+            type="button"
+            onClick={generateFlashcards}
+            disabled={!file || loading}
+            className="mt-7 w-full rounded-xl bg-[#765139] px-6 py-4 font-bold text-[#F5EFE6] hover:bg-[#5D3E2B] disabled:cursor-not-allowed disabled:opacity-50"
+          >
+            {loading ? "Generating Flashcards..." : "Generate Flashcards →"}
+          </button>
+        </section>
+
+        {cards.length > 0 && (
+          <section className="mt-12">
+            <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
+              <h2 className="text-2xl font-extrabold">
+                Your Flashcards
+              </h2>
+              <span className="text-sm text-[#806D5C]">
+                Card {current + 1} of {cards.length}
+              </span>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => toggleAnswer(current)}
+              className="min-h-72 w-full rounded-3xl border border-[#D8C5B0] bg-[#765139] p-8 text-center text-[#F5EFE6] shadow-lg transition hover:bg-[#69472F] sm:p-12"
+            >
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-[#E1C5A8]">
+                {revealed.includes(current) ? "ANSWER" : "QUESTION"}
+              </span>
+
+              <p className="mt-8 text-2xl font-extrabold leading-relaxed">
+                {revealed.includes(current)
+                  ? cards[current].answer
+                  : cards[current].question}
+              </p>
+
+              <p className="mt-10 text-sm text-[#E1C5A8]">
+                Click card to {revealed.includes(current) ? "see question" : "reveal answer"}
+              </p>
+            </button>
+
+            <div className="mt-6 flex items-center justify-between gap-4">
+              <button
+                type="button"
+                onClick={previousCard}
+                disabled={current === 0}
+                className="rounded-xl border border-[#765139] px-6 py-3 font-bold text-[#765139] hover:bg-[#EDE1D2] disabled:opacity-40"
+              >
+                ← Previous
+              </button>
+
+              <button
+                type="button"
+                onClick={nextCard}
+                disabled={current === cards.length - 1}
+                className="rounded-xl bg-[#765139] px-6 py-3 font-bold text-[#F5EFE6] hover:bg-[#5D3E2B] disabled:opacity-40"
+              >
+                Next →
+              </button>
+            </div>
+
+            <div className="mt-6 flex flex-wrap justify-center gap-2">
+              {cards.map((_, index) => (
+                <button
+                  key={index}
+                  type="button"
+                  onClick={() => setCurrent(index)}
+                  aria-label={`Go to card ${index + 1}`}
+                  className={`h-3 w-3 rounded-full ${
+                    current === index ? "bg-[#765139]" : "bg-[#C5AD96]"
+                  }`}
+                />
+              ))}
+            </div>
+          </section>
         )}
-      </main>
-    </div>
+      </div>
+    </main>
   );
 }

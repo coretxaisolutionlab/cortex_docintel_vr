@@ -1,50 +1,63 @@
 
 import Link from "next/link";
 
-interface ToolCardProps {
+type ToolcardProps = {
   title: string;
   description: string;
+  category: string;
   icon: string;
-  href: string;
-  category?: string;
-}
+  href?: string;
+  comingSoon?: boolean;
+};
 
-export default function ToolCard({
+export default function Toolcard({
   title,
   description,
+  category,
   icon,
   href,
-  category = "AI Tool",
-}: ToolCardProps) {
+  comingSoon = false,
+}: ToolcardProps) {
   return (
-    <Link
-      href={href}
-      className="group block rounded-2xl border border-gray-200 bg-white p-6 transition-all duration-200 hover:-translate-y-1 hover:border-purple-300 hover:shadow-lg"
-    >
-      <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-purple-50 text-2xl">
-        {icon}
+    <div className="flex h-full flex-col rounded-2xl border border-[#E6DCCE] bg-white p-6 transition duration-200 hover:-translate-y-1 hover:border-[#C5AD96] hover:shadow-lg">
+      <div className="flex items-start justify-between">
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#F5EFE6] text-2xl text-[#765139]">
+          {icon}
+        </div>
+
+        {comingSoon && (
+          <span className="rounded-full bg-[#F5EFE6] px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-[#A77B55]">
+            Coming Soon
+          </span>
+        )}
       </div>
 
-      <span className="text-xs font-semibold uppercase tracking-wide text-purple-600">
+      <p className="mt-5 text-[10px] font-bold uppercase tracking-[0.16em] text-[#A77B55]">
         {category}
-      </span>
+      </p>
 
-      <h3 className="mt-2 text-lg font-bold text-gray-900">
+      <h3 className="mt-2 text-lg font-bold text-[#38271D]">
         {title}
       </h3>
 
-      <p className="mt-3 min-h-[60px] text-sm leading-6 text-gray-500">
+      <p className="mt-2 flex-1 text-sm leading-6 text-[#806D5C]">
         {description}
       </p>
 
-      <div className="mt-5 flex items-center justify-between border-t border-gray-100 pt-4">
-        <span className="text-sm font-semibold text-purple-600">
-          Open Tool
-        </span>
-        <span className="text-lg text-purple-600 transition group-hover:translate-x-1">
-          →
-        </span>
+      <div className="mt-6 border-t border-[#E6DCCE] pt-4">
+        {comingSoon || !href ? (
+          <span className="text-sm font-semibold text-[#A77B55]">
+            Coming Soon
+          </span>
+        ) : (
+          <Link
+            href={href}
+            className="inline-flex text-sm font-semibold text-[#765139] hover:text-[#5D3E2B] hover:underline"
+          >
+            Open Tool →
+          </Link>
+        )}
       </div>
-    </Link>
+    </div>
   );
 }

@@ -1,224 +1,295 @@
-
 import Link from "next/link";
+import UploadBox from "../components/UploadBox";
 
 const features = [
   {
     number: "01",
-    title: "Chat with Documents",
-    description: "Ask questions and get accurate answers directly from your uploaded documents.",
-    link: "/chat",
+    title: "AI Document Chat",
+    description:
+      "Ask questions from your documents and get clear, relevant answers instantly.",
+    href: "/chat",
   },
   {
     number: "02",
-    title: "Smart Summarization",
-    description: "Turn lengthy documents into clear and easy-to-understand summaries.",
-    link: "/summary",
+    title: "Smart Summarizer",
+    description:
+      "Turn lengthy documents into short, meaningful summaries in seconds.",
+    href: "/summarizer",
   },
   {
     number: "03",
     title: "Data Extraction",
-    description: "Extract important information, dates, names and structured data.",
-    link: "/extraction",
+    description:
+      "Extract important information and key details from your documents.",
+    href: "/extraction",
   },
   {
     number: "04",
     title: "Document Comparison",
-    description: "Compare two documents and identify important differences.",
-    link: "/comparison",
+    description:
+      "Compare multiple documents and identify important differences.",
+    href: "/compare",
   },
 ];
 
-export default function Home() {
+export default function HomePage() {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="overflow-hidden bg-[#F5EFE6] text-[#38271D]">
 
-      <section className="mx-auto max-w-7xl px-6 pb-20 pt-20 lg:px-10 lg:pt-28">
-        <div className="grid items-center gap-14 lg:grid-cols-2">
+      {/* HERO SECTION */}
+      <section className="px-5 pb-20 pt-16 md:px-10 md:pb-28 md:pt-24">
+        <div className="mx-auto grid max-w-7xl items-center gap-14 lg:grid-cols-2">
 
           <div>
-            <div className="mb-7 inline-flex items-center gap-2 rounded-full border border-violet-200 bg-violet-50 px-4 py-2 text-sm font-medium text-violet-700">
-              <span className="h-2 w-2 rounded-full bg-violet-600"></span>
-              Intelligent Document Assistant
-            </div>
+            <span className="inline-flex items-center gap-2 rounded-full border border-[#D8C5B0] bg-[#EFE6DA] px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-[#765139]">
+              <span className="h-2 w-2 rounded-full bg-[#A77B55]" />
+              Intelligent Document Workspace
+            </span>
 
-            <h1 className="max-w-2xl text-5xl font-bold leading-tight tracking-tight text-gray-950 md:text-6xl">
+            <h1 className="mt-7 max-w-2xl text-5xl font-semibold leading-[1.12] tracking-tight text-[#38271D] md:text-7xl">
               Your documents.
               <br />
-              Your questions.
-              <br />
-              <span className="text-violet-600">Instant answers.</span>
+              <span className="font-serif italic text-[#A77B55]">
+                Smarter than ever.
+              </span>
             </h1>
 
-            <p className="mt-7 max-w-xl text-lg leading-8 text-gray-500">
-              Stop searching through endless pages. Upload your documents,
-              ask questions, extract information and understand everything
-              in one place.
+            <p className="mt-7 max-w-xl text-base leading-8 text-[#806D5C] md:text-lg">
+              Discover a smarter way to work with documents. Upload, analyse,
+              summarise and find the information you need with the power of AI.
             </p>
 
             <div className="mt-9 flex flex-wrap gap-4">
               <Link
                 href="/upload"
-                className="rounded-xl bg-violet-600 px-7 py-4 text-sm font-semibold text-white transition hover:bg-violet-700"
+                className="rounded-xl bg-[#765139] px-7 py-4 text-sm font-semibold text-[#F5EFE6] shadow-lg shadow-[#765139]/15 transition hover:-translate-y-1 hover:bg-[#5D3E2B]"
               >
-                Upload Document →
+                Get Started →
               </Link>
 
               <Link
                 href="/tools"
-                className="rounded-xl border border-gray-300 px-7 py-4 text-sm font-semibold text-gray-800 transition hover:border-violet-500 hover:text-violet-600"
+                className="rounded-xl border border-[#CDB69E] px-7 py-4 text-sm font-semibold text-[#765139] transition hover:bg-[#EFE6DA]"
               >
                 Explore AI Tools
               </Link>
             </div>
 
-            <div className="mt-10 flex flex-wrap gap-6 text-sm text-gray-500">
-              <span>✓ PDF Support</span>
-              <span>✓ DOCX Support</span>
-              <span>✓ AI Powered</span>
-            </div>
-          </div>
-
-          <div className="rounded-2xl border border-gray-200 bg-gray-50 p-5 shadow-sm md:p-8">
-            <div className="mb-6 flex items-center justify-between">
+            <div className="mt-12 flex flex-wrap gap-8 border-t border-[#D8C5B0] pt-7">
               <div>
-                <p className="text-sm font-semibold text-gray-900">
-                  Document Workspace
-                </p>
-                <p className="mt-1 text-xs text-gray-500">
-                  Your intelligent document assistant
+                <p className="text-2xl font-semibold text-[#38271D]">01</p>
+                <p className="mt-1 text-xs tracking-wide text-[#806D5C]">
+                  Upload documents
                 </p>
               </div>
-              <span className="rounded-lg bg-violet-100 px-3 py-1.5 text-xs font-semibold text-violet-700">
-                AI Workspace
-              </span>
-            </div>
-
-            <div className="rounded-xl border-2 border-dashed border-gray-300 bg-white px-5 py-12 text-center">
-              <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-xl bg-violet-50 text-2xl">
-                ↑
-              </div>
-
-              <h3 className="mt-5 font-semibold text-gray-900">
-                Upload your document
-              </h3>
-
-              <p className="mt-2 text-sm text-gray-500">
-                Start by adding a PDF or DOCX file
-              </p>
-
-              <Link
-                href="/upload"
-                className="mt-6 inline-block rounded-lg bg-gray-900 px-5 py-3 text-sm font-medium text-white hover:bg-gray-700"
-              >
-                Choose a File
-              </Link>
-            </div>
-
-            <div className="mt-5 grid grid-cols-2 gap-3">
-              <div className="rounded-xl border border-gray-200 bg-white p-4">
-                <p className="text-sm font-semibold text-gray-800">
-                  Summarize
-                </p>
-                <p className="mt-1 text-xs text-gray-500">
-                  Quick document insights
+              <div>
+                <p className="text-2xl font-semibold text-[#38271D]">02</p>
+                <p className="mt-1 text-xs tracking-wide text-[#806D5C]">
+                  Analyse with AI
                 </p>
               </div>
-
-              <div className="rounded-xl border border-gray-200 bg-white p-4">
-                <p className="text-sm font-semibold text-gray-800">
-                  Ask AI
-                </p>
-                <p className="mt-1 text-xs text-gray-500">
-                  Get document answers
+              <div>
+                <p className="text-2xl font-semibold text-[#38271D]">03</p>
+                <p className="mt-1 text-xs tracking-wide text-[#806D5C]">
+                  Get insights
                 </p>
               </div>
             </div>
           </div>
 
+          {/* UPLOAD PANEL */}
+          <div className="relative">
+            <div className="absolute -right-10 -top-10 h-48 w-48 rounded-full bg-[#D8C5B0]/40 blur-3xl" />
+
+            <div className="relative rounded-[2rem] border border-[#D8C5B0] bg-[#EFE6DA] p-5 shadow-2xl shadow-[#38271D]/10 md:p-8">
+              <div className="mb-7 flex items-center justify-between">
+                <div>
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[#A77B55]">
+                    Workspace
+                  </p>
+                  <h2 className="mt-2 text-2xl font-semibold text-[#38271D]">
+                    Start with a document
+                  </h2>
+                </div>
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-[#765139] text-xl text-[#F5EFE6]">
+                  ✦
+                </div>
+              </div>
+
+              <UploadBox />
+
+              <div className="mt-6 flex flex-wrap items-center justify-between gap-3 border-t border-[#D8C5B0] pt-5 text-xs text-[#806D5C]">
+                <span>PDF and DOCX supported</span>
+                <span>Simple · Smart · Secure</span>
+              </div>
+            </div>
+
+            <div className="relative mt-5 flex items-center gap-4 rounded-2xl border border-[#D8C5B0] bg-[#EDE1D2] p-5">
+              <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#765139] text-lg text-[#F5EFE6]">
+                ✧
+              </div>
+              <div>
+                <p className="text-sm font-semibold text-[#38271D]">
+                  Everything in one place
+                </p>
+                <p className="mt-1 text-xs text-[#806D5C]">
+                  Chat, summarise, extract and compare.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
-      <section className="border-t border-gray-100 bg-gray-50 py-20">
-        <div className="mx-auto max-w-7xl px-6 lg:px-10">
+      {/* DIVIDER */}
+      <div className="mx-auto max-w-7xl px-5 md:px-10">
+        <div className="h-px bg-[#D8C5B0]" />
+      </div>
 
-          <div className="mb-12 flex flex-col justify-between gap-5 md:flex-row md:items-end">
+      {/* FEATURES */}
+      <section className="px-5 py-20 md:px-10 md:py-28">
+        <div className="mx-auto max-w-7xl">
+          <div className="flex flex-col justify-between gap-5 md:flex-row md:items-end">
             <div>
-              <p className="text-sm font-semibold uppercase tracking-wider text-violet-600">
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#A77B55]">
                 What you can do
               </p>
-              <h2 className="mt-3 text-3xl font-bold tracking-tight text-gray-900 md:text-4xl">
-                Everything you need to work smarter
+              <h2 className="mt-4 max-w-xl text-4xl font-semibold tracking-tight text-[#38271D] md:text-5xl">
+                A better way to work with information.
               </h2>
-              <p className="mt-3 max-w-xl text-gray-500">
-                Powerful document tools designed to save time and make
-                information easier to understand.
-              </p>
             </div>
 
             <Link
               href="/tools"
-              className="text-sm font-semibold text-violet-600 hover:text-violet-800"
+              className="text-sm font-semibold text-[#765139] transition hover:text-[#A77B55]"
             >
               View all tools →
             </Link>
           </div>
 
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="mt-12 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
             {features.map((feature) => (
               <Link
-                href={feature.link}
                 key={feature.number}
-                className="group rounded-2xl border border-gray-200 bg-white p-6 transition hover:-translate-y-1 hover:border-violet-300 hover:shadow-md"
+                href={feature.href}
+                className="group rounded-2xl border border-[#D8C5B0] bg-[#EFE6DA] p-7 transition duration-300 hover:-translate-y-2 hover:border-[#A77B55] hover:shadow-xl hover:shadow-[#38271D]/10"
               >
-                <span className="text-sm font-semibold text-violet-600">
-                  {feature.number}
-                </span>
+                <div className="flex items-center justify-between">
+                  <span className="text-sm font-semibold text-[#A77B55]">
+                    {feature.number}
+                  </span>
+                  <span className="text-xl text-[#765139] transition group-hover:translate-x-1">
+                    ↗
+                  </span>
+                </div>
 
-                <h3 className="mt-7 text-lg font-bold text-gray-900">
+                <h3 className="mt-12 text-xl font-semibold text-[#38271D]">
                   {feature.title}
                 </h3>
 
-                <p className="mt-3 text-sm leading-6 text-gray-500">
+                <p className="mt-4 text-sm leading-7 text-[#806D5C]">
                   {feature.description}
                 </p>
-
-                <span className="mt-7 inline-block text-sm font-semibold text-gray-800 group-hover:text-violet-600">
-                  Explore feature →
-                </span>
               </Link>
             ))}
           </div>
-
         </div>
       </section>
 
-      <section className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
-        <div className="rounded-2xl bg-gray-950 px-7 py-14 text-center md:px-16">
-          <h2 className="text-3xl font-bold text-white md:text-4xl">
-            Ready to understand your documents better?
+      {/* HOW IT WORKS */}
+      <section className="bg-[#EDE1D2] px-5 py-20 md:px-10 md:py-24">
+        <div className="mx-auto max-w-7xl">
+          <div className="mx-auto max-w-2xl text-center">
+            <p className="text-xs font-semibold uppercase tracking-[0.22em] text-[#A77B55]">
+              The process
+            </p>
+            <h2 className="mt-4 text-4xl font-semibold tracking-tight text-[#38271D] md:text-5xl">
+              Three steps. More clarity.
+            </h2>
+            <p className="mt-5 leading-7 text-[#806D5C]">
+              Get more from your documents without the complicated workflow.
+            </p>
+          </div>
+
+          <div className="mt-14 grid gap-6 md:grid-cols-3">
+            {[
+              {
+                number: "01",
+                title: "Upload",
+                description:
+                  "Choose your document and add it to your workspace.",
+              },
+              {
+                number: "02",
+                title: "Explore",
+                description:
+                  "Select an AI tool to analyse and understand your content.",
+              },
+              {
+                number: "03",
+                title: "Get Results",
+                description:
+                  "Find answers, summaries and useful insights in less time.",
+              },
+            ].map((step) => (
+              <div
+                key={step.number}
+                className="rounded-2xl border border-[#D8C5B0] bg-[#F5EFE6] p-8"
+              >
+                <p className="font-serif text-4xl italic text-[#A77B55]">
+                  {step.number}
+                </p>
+                <h3 className="mt-8 text-2xl font-semibold text-[#38271D]">
+                  {step.title}
+                </h3>
+                <p className="mt-3 text-sm leading-7 text-[#806D5C]">
+                  {step.description}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* FINAL CTA */}
+      <section className="px-5 py-20 md:px-10 md:py-28">
+        <div className="mx-auto max-w-7xl overflow-hidden rounded-[2rem] bg-[#38271D] px-7 py-16 text-center md:px-16 md:py-20">
+          <p className="text-xs font-semibold uppercase tracking-[0.25em] text-[#C9A987]">
+            Make your next document count
+          </p>
+
+          <h2 className="mx-auto mt-6 max-w-3xl font-serif text-4xl italic leading-tight text-[#F5EFE6] md:text-6xl">
+            Less searching. More understanding.
           </h2>
 
-          <p className="mx-auto mt-5 max-w-xl text-gray-400">
-            Bring your documents and let DOCINTEL AI help you find
-            the information that matters.
+          <p className="mx-auto mt-6 max-w-xl text-sm leading-7 text-[#D8C5B0]">
+            Bring your documents into one intelligent workspace and discover
+            what you can do with them.
           </p>
 
           <Link
             href="/upload"
-            className="mt-8 inline-block rounded-xl bg-violet-600 px-7 py-4 text-sm font-semibold text-white hover:bg-violet-700"
+            className="mt-9 inline-flex rounded-xl bg-[#D8C5B0] px-8 py-4 text-sm font-semibold text-[#38271D] transition hover:bg-[#F5EFE6]"
           >
-            Get Started →
+            Start Exploring →
           </Link>
         </div>
       </section>
 
-      <footer className="border-t border-gray-200 px-6 py-7">
-        <div className="mx-auto flex max-w-7xl flex-col justify-between gap-3 text-sm text-gray-500 md:flex-row">
-          <p>© 2026 DOCINTEL AI. All rights reserved.</p>
-          <p>Built for smarter document understanding.</p>
+      {/* FOOTER */}
+      <footer className="border-t border-[#D8C5B0] px-5 py-8 md:px-10">
+        <div className="mx-auto flex max-w-7xl flex-col items-center justify-between gap-4 text-center sm:flex-row sm:text-left">
+          <p className="font-serif text-xl font-semibold text-[#38271D]">
+            DOCINTEL <span className="italic text-[#A77B55]">AI.</span>
+          </p>
+          <p className="text-xs text-[#806D5C]">
+            Intelligent documents. Clearer decisions.
+          </p>
+          <p className="text-xs text-[#806D5C]">
+            © 2026 DOCINTEL AI
+          </p>
         </div>
       </footer>
-
     </main>
   );
 }

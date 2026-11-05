@@ -1,12 +1,12 @@
 
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "../components/Navbar";
+import Navbar from "@/components/Navbar";
 
 export const metadata: Metadata = {
-  title: "DOCINTEL AI | Intelligent Document Assistant",
+  title: "DOCINTEL AI | Document Intelligence",
   description:
-    "Upload, analyze, summarize and chat with your documents using DOCINTEL AI.",
+    "Understand, analyze and manage your documents with DOCINTEL AI.",
 };
 
 export default function RootLayout({
@@ -16,9 +16,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="min-h-screen bg-white text-gray-900 antialiased">
+      <body className="min-h-screen bg-[#f8f3e9] text-[#38291f] antialiased">
         <Navbar />
-        <main>{children}</main>
+
+        <main className="min-h-screen">
+          {children}
+        </main>
       </body>
     </html>
   );

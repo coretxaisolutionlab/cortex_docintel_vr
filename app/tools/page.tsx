@@ -1,273 +1,123 @@
-
 "use client";
 
 import Link from "next/link";
 import { useState } from "react";
 
 const tools = [
-  {
-    name: "PDF Summarizer",
-    description: "Convert lengthy documents into short and meaningful summaries.",
-    icon: "📝",
-    category: "Writing",
-    path: "/summarizer",
-    available: true,
-  },
-  {
-    name: "Chat with PDF",
-    description: "Ask questions and get instant answers from your documents.",
-    icon: "💬",
-    category: "AI Chat",
-    path: "/chat",
-    available: true,
-  },
-  {
-    name: "Data Extraction",
-    description: "Extract important information, names, dates and key details.",
-    icon: "📊",
-    category: "Analysis",
-    path: "/extraction",
-    available: true,
-  },
-  {
-    name: "Document Comparison",
-    description: "Compare two documents and identify their differences.",
-    icon: "📑",
-    category: "Analysis",
-    path: "/compare",
-    available: true,
-  },
-  {
-    name: "Key Points Generator",
-    description: "Find the most important points from lengthy documents.",
-    icon: "🎯",
-    category: "Study",
-    path: "/tools/key-points",
-    available: false,
-  },
-  {
-    name: "AI Flashcards",
-    description: "Create study flashcards automatically from your notes.",
-    icon: "🗂️",
-    category: "Study",
-    path: "/tools/flashcards",
-    available: false,
-  },
-  {
-    name: "AI Quiz Generator",
-    description: "Generate practice questions and quizzes from documents.",
-    icon: "🧠",
-    category: "Study",
-    path: "/tools/quiz",
-    available: false,
-  },
-  {
-    name: "PDF Splitter",
-    description: "Organize large PDF files by splitting selected pages.",
-    icon: "✂️",
-    category: "PDF Tools",
-    path: "/tools/split-pdf",
-    available: false,
-  },
+  { title: "PDF Summarizer", description: "Summarize long documents into concise notes.", category: "Writing", icon: "📄", href: "/summarizer" },
+  { title: "Chat with PDF", description: "Ask questions about your documents.", category: "AI Chat", icon: "💬", href: "/chat" },
+  { title: "Data Extraction", description: "Extract useful information from documents.", category: "Analysis", icon: "📊", href: "/extraction" },
+  { title: "Document Comparison", description: "Compare documents and identify differences.", category: "Analysis", icon: "📑", href: "/compare" },
+  { title: "Key Points Generator", description: "Find important points from study material.", category: "Study", icon: "🎯", href: "/tools/key-points" },
+  { title: "AI Flashcards", description: "Create flashcards from documents.", category: "Study", icon: "🗂️", href: "/tools/flashcards" },
+  { title: "AI Quiz Generator", description: "Generate quizzes from documents.", category: "Study", icon: "🧠", href: "/tools/quiz" },
+  { title: "PDF Splitter", description: "Split PDF files into separate documents.", category: "PDF Tools", icon: "✂️", href: "/tools/split-pdf" },
 ];
 
-const categories = [
-  "All Tools",
-  "Writing",
-  "AI Chat",
-  "Analysis",
-  "Study",
-  "PDF Tools",
-];
+const categories = ["All Tools", "Writing", "AI Chat", "Analysis", "Study", "PDF Tools"];
 
 export default function ToolsPage() {
   const [search, setSearch] = useState("");
-  const [activeCategory, setActiveCategory] = useState("All Tools");
+  const [category, setCategory] = useState("All Tools");
 
   const filteredTools = tools.filter((tool) => {
+    const matchesCategory = category === "All Tools" || tool.category === category;
     const matchesSearch =
-      tool.name.toLowerCase().includes(search.toLowerCase()) ||
+      tool.title.toLowerCase().includes(search.toLowerCase()) ||
       tool.description.toLowerCase().includes(search.toLowerCase());
 
-    const matchesCategory =
-      activeCategory === "All Tools" ||
-      tool.category === activeCategory;
-
-    return matchesSearch && matchesCategory;
+    return matchesCategory && matchesSearch;
   });
 
   return (
-    <main className="min-h-screen bg-[#fafafa] px-5 py-14">
+    <main className="min-h-screen bg-[#F5EFE6] px-5 py-14 text-[#38271D]">
       <div className="mx-auto max-w-7xl">
-
-        {/* Header */}
-        <div className="mb-10 text-center">
-          <span className="inline-block rounded-full bg-purple-100 px-4 py-2 text-sm font-semibold text-purple-700">
-            DOCINTEL AI WORKSPACE
-          </span>
-
-          <h1 className="mt-5 text-4xl font-bold tracking-tight text-gray-900 md:text-5xl">
-            Explore AI Tools
-          </h1>
-
-          <p className="mx-auto mt-4 max-w-2xl text-gray-500">
-            Everything you need to understand, analyze and work
-            smarter with your documents in one place.
+        <header className="mb-10 text-center">
+          <p className="mb-3 font-semibold uppercase tracking-widest text-[#A77B55]">
+            DOCINTEL AI
           </p>
-        </div>
+          <h1 className="mb-4 text-4xl font-bold md:text-5xl">
+            Explore Our Tools
+          </h1>
+          <p className="text-[#806D5C]">
+            Everything you need to understand and analyze your documents.
+          </p>
+        </header>
 
-        {/* Search */}
-        <div className="mx-auto mb-8 max-w-2xl">
-          <div className="flex items-center rounded-xl border border-gray-200 bg-white px-4 py-3 shadow-sm focus-within:border-purple-500 focus-within:ring-2 focus-within:ring-purple-100">
+        <form
+          className="mx-auto mb-8 flex max-w-2xl gap-3"
+          onSubmit={(e) => e.preventDefault()}
+        >
+          <input
+            type="search"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            placeholder="Search tools..."
+            className="min-w-0 flex-1 rounded-xl border border-[#D8C5B0] bg-white px-5 py-3 outline-none focus:border-[#765139]"
+          />
+          <button
+            type="submit"
+            className="cursor-pointer rounded-xl bg-[#765139] px-6 py-3 font-semibold text-white hover:bg-[#5D3E2B]"
+          >
+            Search
+          </button>
+        </form>
 
-            <span className="mr-3 text-xl">⌕</span>
-
-            <input
-              type="search"
-              placeholder="Search AI tools..."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-transparent text-sm text-gray-800 outline-none placeholder:text-gray-400"
-            />
-
-            {search && (
-              <button
-                type="button"
-                onClick={() => setSearch("")}
-                className="text-gray-400 hover:text-purple-600"
-                aria-label="Clear search"
-              >
-                ✕
-              </button>
-            )}
-          </div>
-        </div>
-
-        {/* Category Buttons */}
         <div className="mb-10 flex flex-wrap justify-center gap-3">
-          {categories.map((category) => (
+          {categories.map((item) => (
             <button
+              key={item}
               type="button"
-              key={category}
-              onClick={() => setActiveCategory(category)}
-              aria-pressed={activeCategory === category}
-              className={`rounded-full px-5 py-2.5 text-sm font-medium transition ${
-                activeCategory === category
-                  ? "bg-purple-600 text-white shadow-md"
-                  : "border border-gray-200 bg-white text-gray-600 hover:border-purple-400 hover:text-purple-600"
+              onClick={() => setCategory(item)}
+              className={`cursor-pointer rounded-full border px-5 py-3 text-sm font-semibold ${
+                category === item
+                  ? "border-[#765139] bg-[#765139] text-white"
+                  : "border-[#D8C5B0] bg-white text-[#806D5C] hover:bg-[#E8D9C8]"
               }`}
             >
-              {category}
+              {item}
             </button>
           ))}
         </div>
 
-        {/* Tools Heading */}
-        <div className="mb-6 flex items-center justify-between">
-          <h2 className="text-xl font-bold text-gray-900">
-            Available Tools
-          </h2>
-
-          <span className="text-sm text-gray-500">
-            {filteredTools.length} tools available
+        <div className="mb-5 flex items-center justify-between">
+          <h2 className="text-xl font-bold">Available Tools</h2>
+          <span className="text-sm text-[#806D5C]">
+            {filteredTools.length} tools found
           </span>
         </div>
 
-        {/* Tool Cards */}
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
-
+        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
           {filteredTools.map((tool) => (
             <div
-              key={tool.name}
-              className="group rounded-2xl border border-gray-200 bg-white p-6 transition duration-200 hover:-translate-y-1 hover:border-purple-300 hover:shadow-lg"
+              key={tool.title}
+              className="flex flex-col rounded-2xl border border-[#D8C5B0] bg-[#EFE6DA] p-6 shadow-sm transition hover:-translate-y-1 hover:shadow-md"
             >
-              <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-purple-50 text-2xl">
+              <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-xl bg-[#765139] text-2xl text-white">
                 {tool.icon}
               </div>
-
-              <span className="text-xs font-semibold uppercase tracking-wide text-purple-600">
+              <p className="mb-2 text-xs font-bold uppercase tracking-wider text-[#A77B55]">
                 {tool.category}
-              </span>
-
-              <h3 className="mt-2 text-lg font-bold text-gray-900">
-                {tool.name}
-              </h3>
-
-              <p className="mt-3 min-h-[60px] text-sm leading-6 text-gray-500">
+              </p>
+              <h2 className="mb-3 text-xl font-bold">{tool.title}</h2>
+              <p className="mb-6 flex-1 text-sm leading-6 text-[#806D5C]">
                 {tool.description}
               </p>
-
-              <div className="mt-5 flex items-center justify-between border-t border-gray-100 pt-4">
-
-                {tool.available ? (
-                  <Link
-                    href={tool.path}
-                    className="flex w-full items-center justify-between text-sm font-semibold text-purple-600"
-                  >
-                    Open Tool
-                    <span className="text-lg transition group-hover:translate-x-1">
-                      →
-                    </span>
-                  </Link>
-                ) : (
-                  <span className="flex w-full items-center justify-between text-sm font-semibold text-gray-400">
-                    Coming Soon
-                    <span>🔒</span>
-                  </span>
-                )}
-
-              </div>
+              <Link
+                href={tool.href}
+                className="rounded-xl bg-[#765139] px-4 py-3 text-center text-sm font-semibold text-white hover:bg-[#5D3E2B]"
+              >
+                Open Tool →
+              </Link>
             </div>
           ))}
-
         </div>
 
-        {/* No Results */}
         {filteredTools.length === 0 && (
-          <div className="rounded-2xl border border-gray-200 bg-white py-16 text-center">
-            <div className="text-4xl">🔍</div>
-
-            <h3 className="mt-4 text-xl font-bold text-gray-900">
-              No tools found
-            </h3>
-
-            <p className="mt-2 text-sm text-gray-500">
-              Try another search or select a different category.
-            </p>
-
-            <button
-              type="button"
-              onClick={() => {
-                setSearch("");
-                setActiveCategory("All Tools");
-              }}
-              className="mt-5 rounded-lg bg-purple-600 px-5 py-2 text-white hover:bg-purple-700"
-            >
-              Reset Filters
-            </button>
-          </div>
-        )}
-
-        {/* Bottom Section */}
-        <div className="mt-16 rounded-2xl bg-gray-900 px-8 py-10 text-center text-white">
-
-          <h2 className="text-2xl font-bold">
-            Ready to work smarter?
-          </h2>
-
-          <p className="mt-3 text-sm text-gray-300">
-            Upload your document and start exploring DOCINTEL AI.
+          <p className="py-16 text-center text-[#806D5C]">
+            No tools found. Try another search.
           </p>
-
-          <Link
-            href="/upload"
-            className="mt-6 inline-block rounded-xl bg-purple-600 px-7 py-3 text-sm font-semibold text-white transition hover:bg-purple-700"
-          >
-            Upload Document →
-          </Link>
-
-        </div>
-
+        )}
       </div>
     </main>
   );

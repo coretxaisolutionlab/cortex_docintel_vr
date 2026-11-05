@@ -1,74 +1,121 @@
 
+"use client";
+
 import Link from "next/link";
+import { useState } from "react";
+
+const navLinks = [
+  { name: "Home", href: "/" },
+  { name: "Tools", href: "/tools" },
+  { name: "Dashboard", href: "/dashboard" },
+  { name: "Pricing", href: "/pricing" },
+  { name: "About", href: "/about" },
+];
 
 export default function Navbar() {
-  return (
-    <header className="sticky top-0 z-50 w-full border-b border-gray-200 bg-white">
-      <nav className="mx-auto flex h-[72px] max-w-[1280px] items-center justify-between px-6 lg:px-10">
+  const [menuOpen, setMenuOpen] = useState(false);
 
-        <Link href="/" className="flex items-center gap-2.5">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-violet-600 text-white">
-            <svg
-              width="21"
-              height="21"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="2"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M7 3h7l5 5v13H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Z" />
-              <path d="M14 3v6h5" />
-              <path d="M9 14h6" />
-              <path d="M9 18h6" />
-            </svg>
+  return (
+    <header className="sticky top-0 z-50 border-b border-[#e5d8c7] bg-[#f8f3e9]/95 backdrop-blur-md">
+      <nav className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+
+        {/* LOGO */}
+        <Link
+          href="/"
+          className="flex items-center gap-3"
+          onClick={() => setMenuOpen(false)}
+        >
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#60432f] text-xl text-[#fff8ed]">
+            D
           </div>
 
-          <span className="text-[22px] font-bold tracking-tight text-gray-900">
-            DOCINTEL<span className="text-violet-600"> AI</span>
-          </span>
+          <div>
+            <h1 className="text-xl font-black tracking-tight text-[#38291f]">
+              DOCINTEL
+            </h1>
+            <p className="text-[10px] font-semibold tracking-[0.2em] text-[#98704f]">
+              DOCUMENT INTELLIGENCE
+            </p>
+          </div>
         </Link>
 
-        <div className="hidden items-center gap-9 md:flex">
-          <Link href="/" className="text-sm font-medium text-gray-700 hover:text-violet-600">
-            Home
-          </Link>
-
-          <Link href="/tools" className="text-sm font-semibold text-violet-600 hover:text-violet-700">
-            Tools
-          </Link>
-
-          <Link href="/dashboard" className="text-sm font-medium text-gray-700 hover:text-violet-600">
-            Dashboard
-          </Link>
-
-          <Link href="/pricing" className="text-sm font-medium text-gray-700 hover:text-violet-600">
-            Pricing
-          </Link>
-
-          <Link href="/about" className="text-sm font-medium text-gray-700 hover:text-violet-600">
-            About
-          </Link>
+        {/* DESKTOP MENU */}
+        <div className="hidden items-center gap-8 md:flex">
+          {navLinks.map((link) => (
+            <Link
+              key={link.name}
+              href={link.href}
+              className="text-sm font-semibold text-[#705844] transition hover:text-[#a07855]"
+            >
+              {link.name}
+            </Link>
+          ))}
         </div>
 
-        <div className="flex items-center gap-4">
+        {/* DESKTOP BUTTONS */}
+        <div className="hidden items-center gap-3 md:flex">
           <Link
             href="/login"
-            className="hidden text-sm font-semibold text-gray-700 hover:text-violet-600 sm:block"
+            className="rounded-xl px-5 py-3 text-sm font-semibold text-[#60432f] transition hover:bg-[#eee2ce]"
           >
             Login
           </Link>
 
           <Link
             href="/signup"
-            className="rounded-xl bg-violet-600 px-6 py-3 text-sm font-semibold text-white shadow-sm transition-colors hover:bg-violet-700"
+            className="rounded-xl bg-[#60432f] px-6 py-3 text-sm font-semibold text-[#fff8ed] transition hover:bg-[#432e20]"
           >
-            Sign Up
+            Get Started →
           </Link>
         </div>
 
+        {/* MOBILE MENU BUTTON */}
+        <button
+          type="button"
+          onClick={() => setMenuOpen(!menuOpen)}
+          aria-label="Toggle navigation menu"
+          aria-expanded={menuOpen}
+          className="rounded-lg border border-[#d8c5ae] bg-[#eee2ce] px-4 py-2 text-xl text-[#60432f] md:hidden"
+        >
+          {menuOpen ? "✕" : "☰"}
+        </button>
       </nav>
+
+      {/* MOBILE MENU */}
+      {menuOpen && (
+        <div className="border-t border-[#e5d8c7] bg-[#f8f3e9] px-6 py-5 shadow-lg md:hidden">
+          <div className="flex flex-col gap-2">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                href={link.href}
+                onClick={() => setMenuOpen(false)}
+                className="rounded-lg px-4 py-3 font-semibold text-[#60432f] transition hover:bg-[#eee2ce]"
+              >
+                {link.name}
+              </Link>
+            ))}
+
+            <div className="mt-3 grid grid-cols-2 gap-3">
+              <Link
+                href="/login"
+                onClick={() => setMenuOpen(false)}
+                className="rounded-xl border border-[#b89b7c] py-3 text-center font-semibold text-[#60432f]"
+              >
+                Login
+              </Link>
+
+              <Link
+                href="/signup"
+                onClick={() => setMenuOpen(false)}
+                className="rounded-xl bg-[#60432f] py-3 text-center font-semibold text-white"
+              >
+                Sign Up
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
