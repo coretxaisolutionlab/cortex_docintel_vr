@@ -1,22 +1,16 @@
-# cortex_Docintel-VR
-
 # 📄 DocIntel – Intelligent Document Processing & Analysis
 
 ### AI-Powered PDF Data Extraction, Summarization & Document Intelligence
 
 **Developed by Cortex Intelligence and Technologies**
 
-DocIntel is an AI-powered document intelligence platform designed to simplify how users interact with PDF documents. It extracts meaningful information, generates summaries, and helps users understand large and complex documents efficiently.
-
 ---
 
 ## 🚀 Overview
 
-DocIntel transforms traditional PDF reading into an intelligent and efficient experience.
+DocIntel is an AI-powered document intelligence platform designed to simplify how users interact with PDF documents. It extracts meaningful information, generates summaries, and helps users understand large and complex documents efficiently.
 
-Instead of manually searching through lengthy documents, users can leverage DocIntel to extract relevant information and generate concise summaries.
-
-The platform aims to improve document accessibility, productivity, and information retrieval.
+The platform transforms traditional PDF reading into an intelligent and efficient experience.
 
 ## ✨ Key Features
 
@@ -28,8 +22,6 @@ The platform aims to improve document accessibility, productivity, and informati
 - 🔐 **Privacy-Focused Architecture:** Designed with document privacy and secure processing in mind.
 
 ## 🎯 Use Cases
-
-DocIntel can support multiple industries:
 
 | Industry | Application |
 |---|---|
@@ -43,32 +35,32 @@ DocIntel can support multiple industries:
 ## 🏗️ System Architecture
 
 ```text
-         USER
-           |
-           v
-    PDF DOCUMENT UPLOAD
-           |
-           v
-    DOCUMENT PROCESSING
-           |
-           v
-     TEXT EXTRACTION
-           |
-           v
-    INTELLIGENCE ENGINE
-           |
-      +----+-----+
-      |          |
-      v          v
-  DATA EXTRACTION
-      |       SUMMARIZATION
-      +----+-----+
-           |
-           v
-    STRUCTURED OUTPUT
-           |
-           v
-      USER RESULTS
+          USER
+            |
+            v
+     PDF DOCUMENT UPLOAD
+            |
+            v
+     DOCUMENT PROCESSING
+            |
+            v
+       TEXT EXTRACTION
+            |
+            v
+      INTELLIGENCE ENGINE
+            |
+       +----+-----+
+       |          |
+       v          v
+ DATA EXTRACTION  SUMMARIZATION
+       |          |
+       +----+-----+
+            |
+            v
+      STRUCTURED OUTPUT
+            |
+            v
+        USER RESULTS
 ```
 
 ## 🛠️ Technology Stack
@@ -100,26 +92,6 @@ The technology stack is based on the actual implementation and can be updated as
 - Advanced document analytics
 - Enterprise document management
 - Role-based access control
-- 
-
-## 👨‍💻 Developed By
-
-**Cortex Intelligence and Technologies**
-
-Building intelligent solutions through Artificial Intelligence, Machine Learning, and Advanced Technologies.
-
-**Product:** DocIntel  
-**Category:** AI / Document Intelligence  
-**Project Status:** Working Demo Ready
-
----
-# 📄 DocIntel – Intelligent Document Processing & Analysis
-
-### AI-Powered PDF Data Extraction, Summarization & Document Intelligence
-
-**Developed by Cortex Intelligence and Technologies**
-
----
 
 ## 👥 Project Team & Responsibilities
 
@@ -136,8 +108,17 @@ Building intelligent solutions through Artificial Intelligence, Machine Learning
 
 **Organization:** Cortex Intelligence and Technologies
 
----
+## 👨‍💻 Developed By
 
+**Cortex Intelligence and Technologies**
+
+Building intelligent solutions through Artificial Intelligence, Machine Learning, and Advanced Technologies.
+
+- **Product:** DocIntel
+- **Category:** AI / Document Intelligence
+- **Project Status:** Working Demo Ready
+
+---
 
 ## 📜 License
 
